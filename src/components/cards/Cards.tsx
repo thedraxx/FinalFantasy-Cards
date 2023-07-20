@@ -1,50 +1,136 @@
 'use client'
+import { GetCharacter } from '@/interface/iGetCharacter'
 import Image from 'next/image'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { FaArrowLeft, FaArrowRight } from 'react-icons/fa'
+interface Props {
+    props: GetCharacter[]
+}
 
-export const Cards = () => {
+
+export const Cards = ({ props }: Props) => {
+
+    const itemsPerPage = 6; // Número de elementos por página
+    const [pageNumber, setPageNumber] = useState(1);
+    const [paginatedData, setPaginatedData] = useState<GetCharacter[]>([]);
+
+    console.log(props)
+
+
+    useEffect(() => {
+        // Calcula el índice inicial y final para la página actual
+        const startIndex = (pageNumber - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+
+        // Obtiene los datos para la página actual
+        const currentPageData = props.slice(startIndex, endIndex);
+
+        setPaginatedData(currentPageData);
+    }, [props, pageNumber]);
+
+
     return (
         <div className='grid grid-cols-3 gap-5 items-center justify-center w-auto h-auto bg-white p-20 rounded-xl shadow-xl shadow-black/40'>
-            <div className="group h-96 w-80 [perspective:1000px] mt-5">
-                <div className="relative h-full w-full rounded-xl shadow-xl transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-                    <div className="absolute inset-0 ">
-                        <Image
-                            className="h-full w-full rounded-xl object-cover shadow-xl shadow-black/40"
-                            src="https://images.unsplash.com/photo-1562583489-bf23ec64651d?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80')"
-                            alt=""
-                            layout="fill"
-                        />
-                        <div
-                            className="absolute bottom-0 z-40 inset0 w-full h-24 rounded-b-xl bg-white/90 px-2 text-center text-black [transform:rotateY(0deg)] [backface-visibility:hidden]">
-                            <h1
-                                className="text-lg font-bold text-black/90 hover:text-black/80 transition-all duration-500 text-left"
-                            >
-                                Title
-                            </h1>
-                            <h2
-                                className='text-sm text-black/70 hover:text-black/80 transition-all duration-500 text-left'
-                            >
-                                By subtitle
-                            </h2>
-                            <p
-                                className="text-xs text-black/80 hover:text-black/80 transition-all duration-500 text-left"
-                            >
-                                Lorem ipsum dolor sit amet consectetur adipisicing elit...
-                            </p>
 
-                        </div>
-                    </div>
+            {
+                paginatedData.map((item, index) => {
+                    return (
+                        <>
+                            <div
+                                className="group h-96 w-80 [perspective:1000px] mt-5"
+                                key={index}
+                            >
+                                <div className="relative h-full w-full rounded-xl shadow-xl transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                                    <div className="absolute inset-0 ">
 
-                    <div className="absolute inset-0 h-full w-full rounded-xl bg-black/80 px-12 text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
-                        <div className="flex min-h-full flex-col items-center justify-center">
-                            <h1 className="text-3xl font-bold">Jane Doe</h1>
-                            <p className="text-lg">Photographer & Art</p>
-                            <p className="text-base">Lorem ipsum dolor sit amet consectetur adipisicing.</p>
-                            <button className="mt-2 rounded-md bg-neutral-800 py-1 px-2 text-sm hover:bg-neutral-900">Read More</button>
-                        </div>
-                    </div>
-                </div>
+                                        {item.pictures.map((item, index) => {
+                                            return (
+                                                <div
+                                                    key={index}
+                                                    className="h-full w-full rounded-xl object-cover shadow-xl shadow-black/40"
+                                                >
+                                                    <Image
+                                                        className="h-full w-full rounded-xl object-cover shadow-xl shadow-black/40"
+                                                        src={item.url}
+                                                        alt="character name"
+                                                        layout="fill"
+                                                    />
+                                                </div>
+                                            )
+                                        })}
+
+                                        <div
+                                            className="absolute bottom-0 z-40 inset0 w-full h-24 rounded-b-xl bg-white/90 px-2 text-center text-black [transform:rotateY(0deg)] [backface-visibility:hidden]">
+                                            <h1
+                                                className="text-lg font-bold text-black/90 hover:text-black/80 transition-all duration-500 text-left"
+                                            >
+                                                {item.name}
+                                            </h1>
+                                            <h2
+                                                className='text-sm text-black/70 hover:text-black/80 transition-all duration-500 text-left'
+                                            >
+                                                {item.job}
+                                            </h2>
+                                            <p
+                                                className="text-xs text-black/80 hover:text-black/80 transition-all duration-500 text-left"
+                                            >
+                                                {
+                                                    item.description ?
+                                                        item.description.length > 100
+                                                            ? item.description.substring(0, 100) + '...'
+                                                            : item.description
+                                                        : item.origin
+                                                }
+                                            </p>
+
+                                        </div>
+                                    </div>
+
+                                    <div className="absolute inset-0 h-full w-full rounded-xl bg-black/80 px-12 text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                                        <div className="flex min-h-full flex-col items-center justify-center">
+                                            <h1 className="text-3xl font-bold">{item.name}</h1>
+                                            <p className="text-lg">{
+                                                item.job ?
+                                                    item.job
+                                                    : item.name
+                                            }</p>
+                                            <p className="text-base">{
+                                                item.description ?
+                                                    item.description.length > 100
+                                                        ? item.description.substring(0, 100) + '...'
+                                                        : item.description
+                                                    : item.origin
+                                            }.</p>
+                                            <button className="mt-2 rounded-md bg-neutral-800 py-1 px-2 text-sm hover:bg-neutral-900">Read More</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ >
+                    )
+                }
+                )
+            }
+
+            <div className="grid col-span-3 grid-cols-3 gap-2 justify-center mt-5 items-center ">
+                <button
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+                    onClick={() => setPageNumber((prev) => Math.max(prev - 1, 1))}
+                    disabled={pageNumber === 1}
+                >
+                    <FaArrowLeft />
+                </button>
+                <span className="text-center text-gray-800">Page {pageNumber}</span>
+                <button
+                    className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
+                    onClick={() => setPageNumber((prev) => Math.min(prev + 1, Math.ceil(props.length / itemsPerPage)))}
+                    disabled={pageNumber === Math.ceil(props.length / itemsPerPage)}
+                >
+                    <FaArrowRight />
+                </button>
             </div>
-        </div >
+
+        </div>
+
     )
 }
