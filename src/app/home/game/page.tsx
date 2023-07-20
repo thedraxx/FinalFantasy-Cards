@@ -1,7 +1,7 @@
 import { Cards } from '@/components/cards'
 import React from 'react'
 
-const homePage = () => {
+const gamePage = () => {
     return (
         <>
             <div
@@ -13,4 +13,4 @@ const homePage = () => {
     )
 }
 
-export default homePage
+export default gamePage
