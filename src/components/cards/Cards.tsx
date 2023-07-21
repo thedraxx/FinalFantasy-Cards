@@ -7,15 +7,11 @@ interface Props {
     props: GetCharacter[]
 }
 
-
 export const Cards = ({ props }: Props) => {
 
     const itemsPerPage = 10; // Número de elementos por página
     const [pageNumber, setPageNumber] = useState(1);
     const [paginatedData, setPaginatedData] = useState<GetCharacter[]>([]);
-
-    console.log(props)
-
 
     useEffect(() => {
         // Calcula el índice inicial y final para la página actual
@@ -32,91 +28,82 @@ export const Cards = ({ props }: Props) => {
     return (
         <div className='flex flex-col w-auto h-auto items-center justify-center mb-5'>
             <div className='flex flex-wrap justify-center gap-5 mb-10 px-5 md:px-10'>
-
                 {
                     paginatedData.map((item, index) => {
                         return (
-                            <>
-                                <div
-                                    className="group h-96 w-80 [perspective:1000px] mt-5"
-                                    key={index}
-                                >
-                                    <div className="relative h-full w-full rounded-xl shadow-xl transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
-                                        <div className="absolute inset-0 ">
+                            <div
+                                className="group h-96 w-80 [perspective:1000px] mt-5"
+                                key={index}
+                            >
+                                <div className="relative h-full w-full rounded-xl shadow-xl transition-all duration-500 [transform-style:preserve-3d] group-hover:[transform:rotateY(180deg)]">
+                                    <div className="absolute inset-0 ">
 
-                                            {item.pictures.map((item, index) => {
-                                                return (
-                                                    <div
-                                                        key={index}
-                                                        className="h-full w-full rounded-xl object-cover shadow-xl shadow-black/40"
-                                                    >
-                                                        <Image
-                                                            className="h-full w-full rounded-xl object-cover shadow-xl shadow-black/40"
-                                                            src={item.url}
-                                                            alt="character name"
-                                                            layout="fill"
-                                                        />
-                                                    </div>
-                                                )
-                                            })}
-
+                                        {item.pictures.map((item, index) => (
                                             <div
-                                                className="absolute bottom-0 z-40 inset0 w-full h-24 rounded-b-xl bg-white/90 px-2 text-center text-black [transform:rotateY(0deg)] [backface-visibility:hidden]">
-                                                <h1
-                                                    className="text-lg font-bold text-black/90 hover:text-black/80 transition-all duration-500 text-left"
-                                                >
-                                                    {item.name}
-                                                </h1>
-                                                <h2
-                                                    className='text-sm text-black/70 hover:text-black/80 transition-all duration-500 text-left'
-                                                >
-                                                    {item.job}
-                                                </h2>
-                                                <p
-                                                    className="text-xs text-black/80 hover:text-black/80 transition-all duration-500 text-left"
-                                                >
-                                                    {
-                                                        item.description ?
-                                                            item.description.length > 100
-                                                                ? item.description.substring(0, 100) + '...'
-                                                                : item.description
-                                                            : item.origin
-                                                    }
-                                                </p>
-
+                                                key={index}
+                                                className="h-full w-full rounded-xl object-cover shadow-xl shadow-black/40"
+                                            >
+                                                <Image
+                                                    className="h-full w-full rounded-xl object-cover shadow-xl shadow-black/40"
+                                                    src={item.url}
+                                                    alt="character name"
+                                                    layout="fill"
+                                                />
                                             </div>
-                                        </div>
-
-                                        <div className="absolute inset-0 h-full w-full rounded-xl bg-black/80 px-12 text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
-                                            <div className="flex min-h-full flex-col items-center justify-center">
-                                                <h1 className="text-3xl font-bold">{item.name}</h1>
-                                                <p className="text-lg">{
-                                                    item.job ?
-                                                        item.job
-                                                        : item.name
-                                                }</p>
-                                                <p className="text-base">{
+                                        )
+                                        )}
+                                        <div
+                                            className="absolute bottom-0 z-40 inset0 w-full h-24 rounded-b-xl bg-white/90 px-2 text-center text-black [transform:rotateY(0deg)] [backface-visibility:hidden]">
+                                            <h1
+                                                className="text-lg font-bold text-black/90 hover:text-black/80 transition-all duration-500 text-left"
+                                            >
+                                                {item.name}
+                                            </h1>
+                                            <h2
+                                                className='text-sm text-black/70 hover:text-black/80 transition-all duration-500 text-left'
+                                            >
+                                                {item.job}
+                                            </h2>
+                                            <p
+                                                className="text-xs text-black/80 hover:text-black/80 transition-all duration-500 text-left"
+                                            >
+                                                {
                                                     item.description ?
                                                         item.description.length > 100
                                                             ? item.description.substring(0, 100) + '...'
                                                             : item.description
                                                         : item.origin
-                                                }.</p>
-                                                <button className="mt-2 rounded-md bg-neutral-800 py-1 px-2 text-sm hover:bg-neutral-900">Read More</button>
-                                            </div>
+                                                }
+                                            </p>
+
+                                        </div>
+                                    </div>
+
+                                    <div className="absolute inset-0 h-full w-full rounded-xl bg-black/80 px-12 text-center text-slate-200 [transform:rotateY(180deg)] [backface-visibility:hidden]">
+                                        <div className="flex min-h-full flex-col items-center justify-center">
+                                            <h1 className="text-3xl font-bold">{item.name}</h1>
+                                            <p className="text-lg">{
+                                                item.job ?
+                                                    item.job
+                                                    : item.name
+                                            }</p>
+                                            <p className="text-base">{
+                                                item.description ?
+                                                    item.description.length > 100
+                                                        ? item.description.substring(0, 100) + '...'
+                                                        : item.description
+                                                    : item.origin
+                                            }.</p>
+                                            <button className="mt-2 rounded-md bg-neutral-800 py-1 px-2 text-sm hover:bg-neutral-900">Read More</button>
                                         </div>
                                     </div>
                                 </div>
-                            </ >
+                            </div>
                         )
                     }
                     )
                 }
-
-
-
             </div>
-
             <div className="grid col-span-3 grid-cols-3 gap-2 justify-center mt-5 items-center ">
                 <button
                     className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-md"
@@ -134,10 +121,6 @@ export const Cards = ({ props }: Props) => {
                     <FaArrowRight />
                 </button>
             </div>
-
-
-
         </div>
-
     )
 }
