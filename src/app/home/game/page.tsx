@@ -1,11 +1,11 @@
-import { Cards, CardsGames } from '@/components/cards'
+import finalFantasyAPI from '@/api/finalFantasyAPI'
+import { CardsGames } from '@/components/cards'
 import { GetGames } from '@/interface/iGetGames'
 import React from 'react'
 
 const getCharactersGame = async (): Promise<GetGames[]> => {
-    const getCharacter = await fetch('https://www.moogleapi.com/api/v1/games')
-    const getCharacterJson = await getCharacter.json()
-    return getCharacterJson
+    const getCharacter = await finalFantasyAPI.get('/games')
+    return getCharacter.data
 }
 
 const gamePage = async () => {
