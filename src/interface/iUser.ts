@@ -8,3 +8,9 @@ export interface iuser {
     _id: string;
     createdAt: Date;
 }
+
+
+export enum Role {
+    Admin = "admin",
+    Client = "client",
+}

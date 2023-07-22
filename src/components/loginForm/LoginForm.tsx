@@ -10,9 +10,6 @@ export const LoginForm = () => {
     const { inputs, setInputs } = LoginHelper();
     const { handleLogin, isLogin } = useContext(HandleClientContext);
 
-
-    console.log(isLogin)
-
     return (
         <div
             className="flex flex-col bg-white justify-center items-center p-10 rounded-xl border-solid border-2 border-black  shadow-xl "
