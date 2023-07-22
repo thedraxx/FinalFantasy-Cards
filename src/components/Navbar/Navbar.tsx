@@ -1,9 +1,6 @@
 'use client'
 import React, { useState } from 'react'
-import { onSubmit } from '../onSubmit/onSubmit'
 import { FaArrowDown, FaArrowUp } from 'react-icons/fa'
-
-
 
 export const Navbar = () => {
 
@@ -18,7 +15,7 @@ export const Navbar = () => {
                     className='flex flex-row justify-center items-center w-full h-16'
                     onSubmit={(e) => {
                         e.preventDefault()
-                        onSubmit(inputText as any)
+                        console.log(inputText)
                     }}
                 >
 

@@ -3,10 +3,10 @@ import React, { useState } from 'react'
 
 export const LoginHelper = () => {
 
-    const [inputs, setInputs] = useState({
-        username: '',
-        password: ''
-    })
+  const [inputs, setInputs] = useState({
+    email: '',
+    password: ''
+  })
 
 
   return {

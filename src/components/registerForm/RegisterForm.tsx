@@ -1,6 +1,7 @@
 'use client'
-import { LoginHelper, RegisterHelper } from '@/helpers'
-import React, { useState } from 'react'
+import { HandleClientContext } from '@/context/HandleClientContext'
+import { RegisterHelper } from '@/helpers'
+import React, { useContext, useState } from 'react'
 
 export const RegisterForm = () => {
 
@@ -8,6 +9,7 @@ export const RegisterForm = () => {
     const [onFocusPassword, setOnFocusPassword] = useState(false)
     const [onFocusEmail, setOnFocusEmail] = useState(false)
     const { inputs, setInputs } = RegisterHelper();
+    const { handleRegister, isLogin } = useContext(HandleClientContext);
 
     return (
         <div
@@ -51,8 +53,9 @@ export const RegisterForm = () => {
                 />
                 <button
                     className="btn btn-primary bg-slate-700 w-80 p-2 rounded-md hover:bg-slate-800 trasition-all duration-200 ease-in-out"
+                    onClick={() => handleRegister(inputs.email, inputs.username, inputs.password)}
                 >
-                    Login
+                    Register
                 </button>
             </div>
         </div>

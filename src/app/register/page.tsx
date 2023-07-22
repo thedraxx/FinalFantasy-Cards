@@ -1,7 +1,23 @@
+'use client'
 import { RegisterForm } from '@/components/registerForm'
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { HandleClientContext } from '@/context/HandleClientContext';
+import { useRouter } from 'next/navigation';
 
-const page = () => {
+
+
+const registerPage = () => {
+    const { isLogin } = useContext(HandleClientContext);
+    const { push } = useRouter();
+
+
+    useEffect(() => {
+        if (isLogin) {
+            push('/home');
+        }
+    }, [isLogin])
+
+
     return (
         <div
             className='bg-gradient-to-l from-sky-400 to-blue-500 flex flex-1 flex-col w-100 h-screen justify-center items-center'
@@ -14,4 +30,4 @@ const page = () => {
     )
 }
 
-export default page
+export default registerPage

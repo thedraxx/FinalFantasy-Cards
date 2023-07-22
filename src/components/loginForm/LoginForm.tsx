@@ -1,12 +1,17 @@
 'use client'
 import { LoginHelper } from '@/helpers'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { HandleClientContext } from '@/context/HandleClientContext';
 
 export const LoginForm = () => {
 
-    const [onFocusUsername, setOnFocusUsername] = useState(false)
+    const [onFocusEmail, setOnFocusEmail] = useState(false)
     const [onFocusPassword, setOnFocusPassword] = useState(false)
     const { inputs, setInputs } = LoginHelper();
+    const { handleLogin, isLogin } = useContext(HandleClientContext);
+
+
+    console.log(isLogin)
 
     return (
         <div
@@ -22,13 +27,13 @@ export const LoginForm = () => {
                 className="flex items-center justify-center flex-col"
             >
                 <input
-                    type="text"
-                    placeholder="Username"
-                    onChange={(e) => setInputs({ ...inputs, username: e.target.value })}
-                    value={inputs.username}
-                    onFocus={() => setOnFocusUsername(true)}
-                    onBlur={() => setOnFocusUsername(false)}
-                    className={`outline form-control mb-2 w-80 p-2 rounded-md text-white border-solid border-2 border-gray-800 ${onFocusUsername || inputs.username.length > 1 ? 'bg-black' : 'bg-white'} transition-all duration-200 ease-in-out`}
+                    type="email"
+                    placeholder="email"
+                    onChange={(e) => setInputs({ ...inputs, email: e.target.value })}
+                    value={inputs.email}
+                    onFocus={() => setOnFocusEmail(true)}
+                    onBlur={() => setOnFocusEmail(false)}
+                    className={`outline form-control mb-2 w-80 p-2 rounded-md text-white border-solid border-2 border-gray-800 ${onFocusEmail || inputs.email.length > 1 ? 'bg-black' : 'bg-white'} transition-all duration-200 ease-in-out`}
                 />
                 <input
                     type="password"
@@ -41,6 +46,7 @@ export const LoginForm = () => {
                 />
                 <button
                     className="btn btn-primary bg-slate-700 w-80 p-2 rounded-md hover:bg-slate-800 trasition-all duration-200 ease-in-out"
+                    onClick={() => handleLogin(inputs.email, inputs.password)}
                 >
                     Login
                 </button>
